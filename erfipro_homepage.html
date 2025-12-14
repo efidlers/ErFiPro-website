@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ErFiPro - Samen maken we digitaal eenvoudig</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-box {
+            height: auto;
+            background: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-box img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo-text .blue { color: #0066cc; }
+        .logo-text .black { color: #000000; }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #2196F3;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #1976D2;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .features {
+            padding: 80px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .about {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            padding: 80px 2rem;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact {
+            background: white;
+            padding: 80px 2rem;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .contact-item-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: #2196F3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: #1976D2;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <div class="logo-box">
+                    <img src="https://i.imgur.com/k7DPlMv.png" alt="ErFiPro">
+                </div>
+            </a>
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <ul>
+                    <li><a href="#home" class="nav-home">Home</a></li>
+                    <li><a href="#features" class="nav-features">Functies</a></li>
+                    <li><a href="#about" class="nav-about">Over Ons</a></li>
+                    <li><a href="#contact" class="nav-contact">Contact</a></li>
+                </ul>
+                <div class="language-selector">
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn active" onclick="setLanguage('nl')">NL</button>
+                    <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title"></h1>
+            <p class="hero-subtitle"></p>
+            <a href="#contact" class="cta-button cta-text"></a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="features-title"></h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature1-title"></h3>
+                <p class="feature1-text"></p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3 class="feature2-title"></h3>
+                <p class="feature2-text"></p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature3-title"></h3>
+                <p class="feature3-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2 class="about-title"></h2>
+            <p class="about-text1"></p>
+            <p class="about-text2"></p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2 class="contact-title"></h2>
+            <div class="contact-details">
+                <div class="contact-item">
+                    <div class="contact-item-icon">📧</div>
+                    <a href="mailto:erik.fidlers@erfipro.be">erik.fidlers@erfipro.be</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-icon">📍</div>
+                    <span>Den Dries 24, 3840 Tongeren-Borgloon</span>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-icon">📞</div>
+                    <a href="tel:+32476438304">+32 476 43 83 04</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="footer-text1"></p>
+        <p class="footer-text2"></p>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                navHome: 'Home',
+                navFeatures: 'Features',
+                navAbout: 'About',
+                navContact: 'Contact',
+                heroTitle: 'Together we make digital simple',
+                heroSubtitle: 'We help organizations grow through tailored digital solutions that are simple and effective. Together we make a difference.',
+                ctaText: 'Get Started',
+                featuresTitle: 'Why Choose ErFiPro?',
+                feature1Title: 'Fast Implementation',
+                feature1Text: 'Our streamlined approach gets your digital solutions up and running quickly, minimizing downtime and maximizing efficiency.',
+                feature2Title: 'Smart Solutions',
+                feature2Text: 'Tailored apps designed specifically for your business needs, ensuring seamless integration with your existing processes.',
+                feature3Title: 'Secure & Reliable',
+                feature3Text: 'Enterprise-grade security and reliability you can trust, protecting your data and ensuring business continuity.',
+                aboutTitle: 'About ErFiPro',
+                aboutText1: 'We specialize in creating custom digital solutions that make company digitalization straightforward and accessible. Our team of experts understands the challenges businesses face in the digital age.',
+                aboutText2: 'From workflow automation to data management, we build apps that simplify complex processes and empower your team to work smarter, not harder.',
+                contactTitle: 'Get In Touch',
+                footerText1: '© 2024 ErFiPro. All rights reserved.',
+                footerText2: 'Together we make digital simple.'
+            },
+            nl: {
+                navHome: 'Home',
+                navFeatures: 'Functies',
+                navAbout: 'Over Ons',
+                navContact: 'Contact',
+                heroTitle: 'Samen maken we digitaal eenvoudig',
+                heroSubtitle: 'Wij helpen organisaties groeien door digitale oplossingen op maat die eenvoudig en effectief zijn. Samen maken we het verschil.',
+                ctaText: 'Aan de Slag',
+                featuresTitle: 'Waarom Kiezen voor ErFiPro?',
+                feature1Title: 'Snelle Implementatie',
+                feature1Text: 'Onze gestroomlijnde aanpak zorgt ervoor dat uw digitale oplossingen snel operationeel zijn, met minimale downtime en maximale efficiëntie.',
+                feature2Title: 'Slimme Oplossingen',
+                feature2Text: 'Op maat gemaakte apps speciaal ontworpen voor uw bedrijfsbehoeften, met naadloze integratie in uw bestaande processen.',
+                feature3Title: 'Veilig & Betrouwbaar',
+                feature3Text: 'Beveiliging en betrouwbaarheid op ondernemingsniveau waar u op kunt vertrouwen, met bescherming van uw gegevens en bedrijfscontinuïteit.',
+                aboutTitle: 'Over ErFiPro',
+                aboutText1: 'Wij zijn gespecialiseerd in het creëren van digitale oplossingen op maat die de digitalisering van bedrijven eenvoudig en toegankelijk maken. Ons team van experts begrijpt de uitdagingen waarmee bedrijven worden geconfronteerd in het digitale tijdperk.',
+                aboutText2: 'Van workflowautomatisering tot gegevensbeheer, wij bouwen apps die complexe processen vereenvoudigen en uw team in staat stellen slimmer te werken, niet harder.',
+                contactTitle: 'Neem Contact Op',
+                footerText1: '© 2024 ErFiPro. Alle rechten voorbehouden.',
+                footerText2: 'Samen maken we digitaal eenvoudig.'
+            },
+            fr: {
+                navHome: 'Accueil',
+                navFeatures: 'Fonctionnalités',
+                navAbout: 'À Propos',
+                navContact: 'Contact',
+                heroTitle: 'Ensemble, nous simplifions le numérique',
+                heroSubtitle: 'Nous aidons les organisations à se développer grâce à des solutions numériques sur mesure qui sont simples et efficaces. Ensemble, nous faisons la différence.',
+                ctaText: 'Commencer',
+                featuresTitle: 'Pourquoi Choisir ErFiPro?',
+                feature1Title: 'Mise en Œuvre Rapide',
+                feature1Text: 'Notre approche rationalisée permet de mettre en place rapidement vos solutions numériques, minimisant les temps d\'arrêt et maximisant l\'efficacité.',
+                feature2Title: 'Solutions Intelligentes',
+                feature2Text: 'Applications sur mesure conçues spécifiquement pour les besoins de votre entreprise, assurant une intégration transparente avec vos processus existants.',
+                feature3Title: 'Sécurisé & Fiable',
+                feature3Text: 'Sécurité et fiabilité de niveau entreprise sur lesquelles vous pouvez compter, protégeant vos données et assurant la continuité de votre activité.',
+                aboutTitle: 'À Propos d\'ErFiPro',
+                aboutText1: 'Nous sommes spécialisés dans la création de solutions numériques personnalisées qui rendent la numérisation des entreprises simple et accessible. Notre équipe d\'experts comprend les défis auxquels les entreprises sont confrontées à l\'ère numérique.',
+                aboutText2: 'De l\'automatisation des flux de travail à la gestion des données, nous créons des applications qui simplifient les processus complexes et permettent à votre équipe de travailler plus intelligemment, pas plus dur.',
+                contactTitle: 'Contactez-Nous',
+                footerText1: '© 2024 ErFiPro. Tous droits réservés.',
+                footerText2: 'Ensemble, nous simplifions le numérique.'
+            }
+        };
+
+        function setLanguage(lang) {
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[onclick="setLanguage('${lang}')"]`).classList.add('active');
+
+            // Update all text content
+            const t = translations[lang];
+            document.querySelector('.nav-home').textContent = t.navHome;
+            document.querySelector('.nav-features').textContent = t.navFeatures;
+            document.querySelector('.nav-about').textContent = t.navAbout;
+            document.querySelector('.nav-contact').textContent = t.navContact;
+            document.querySelector('.hero-title').textContent = t.heroTitle;
+            document.querySelector('.hero-subtitle').textContent = t.heroSubtitle;
+            document.querySelector('.cta-text').textContent = t.ctaText;
+            document.querySelector('.features-title').textContent = t.featuresTitle;
+            document.querySelector('.feature1-title').textContent = t.feature1Title;
+            document.querySelector('.feature1-text').textContent = t.feature1Text;
+            document.querySelector('.feature2-title').textContent = t.feature2Title;
+            document.querySelector('.feature2-text').textContent = t.feature2Text;
+            document.querySelector('.feature3-title').textContent = t.feature3Title;
+            document.querySelector('.feature3-text').textContent = t.feature3Text;
+            document.querySelector('.about-title').textContent = t.aboutTitle;
+            document.querySelector('.about-text1').textContent = t.aboutText1;
+            document.querySelector('.about-text2').textContent = t.aboutText2;
+            document.querySelector('.contact-title').textContent = t.contactTitle;
+            document.querySelector('.footer-text1').textContent = t.footerText1;
+            document.querySelector('.footer-text2').textContent = t.footerText2;
+        }
+
+        // Initialize with Dutch
+        setLanguage('nl');
+    </script>
+</body>
+</html>
